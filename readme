@@ -1,0 +1,24 @@
+TODO:
+-czytanie listy zawodników
+-dodawanie zawodników do listy
+-usuwanie zawadników z listy
+-edycja wagi
+
+zawodnik powinien posiadać
+    -id
+    -imie
+    -nazwisko
+    -wiek
+    -waga
+    -wygrane
+    -remisy
+    -przegrane
+    -miejsce w rankingu
+
+funkcja start_the_rumble
+    -losuje 10 zawodników do 5 pojedynków
+    -losuje wygrane
+    -zamienia zawodników rankingami
+
+funkcja wyswietl_rankingi
+    -argument 1: klasa wagowa
