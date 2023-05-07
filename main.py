@@ -13,7 +13,8 @@ if __name__ == "__main__":
         elif opcja == "2":
             h.Wpisz_dane()
         elif opcja == "3":
-            e.delete_fighter()
+            h.Wpisz_imie_nazwisko()
+            e.delete_fighter(h.wName,h.wSurname)
         elif opcja == "0":
             break
         else:

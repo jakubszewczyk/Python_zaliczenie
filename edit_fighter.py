@@ -20,33 +20,35 @@ class Edit_Fighters:
         except ValidationError as e:
             print(e)
 
-    def delete_fighter(self):
-        self.show_fighters()
-        imie = input("podaj imie: ")
-        nazwisko = input("podaj nazwisko: ")
-        indeks = 1
+    def delete_fighter(self, name, surname):
+        fighters = self.fighter_cls.load()
+        matching_fighters = [
+            (index, fighter) for index, fighter in enumerate(fighters)
+            if fighter.name == name and fighter.surname == surname
+        ]
 
-        for fighter in self.fighter_cls.load():
-            if fighter.name == imie and fighter.surname == nazwisko:
-                print(f"Zawodnik: {indeks} Name: {fighter.name}, Surname: {fighter.surname}, Weight Class: {fighter.weight_class}, Position: {fighter.position_in_ranking}")
-                indeks = indeks + 1
-                
-        ktory_zawodnik = int(input("Chcę usunąć zawodnika: "))
-        indeks = 1
-        
-        for id, fighter in enumerate(self.fighter_cls.load()):
-            if fighter.name == imie and fighter.surname == nazwisko:
-                if indeks == ktory_zawodnik:
-                    self.fighter_cls.delete_fighter(id)
-                    print(f"Pomyślnie usunięto zawodnika o imieniu {imie} i nazwisku {nazwisko}")
-                    return
-                elif indeks < ktory_zawodnik:
-                    indeks = indeks + 1
-        
-        print("Nie znaleziono takiego zawodnika")
+        if matching_fighters:
+            print("Znaleziono następujących zawodników:")
+            k = 1
+            for i, fighter in matching_fighters:
+                print(f"Zawodnik: {k} Name: {fighter.name}, Surname: {fighter.surname}, Weight Class: {fighter.weight_class}, Position: {fighter.position_in_ranking}")
+                k += 1
+            fighter_index = int(input("Którego zawodnika chcesz usunąć? Podaj numer: "))
+
+            if 1 <= fighter_index <= len(matching_fighters):
+                index, _ = matching_fighters[fighter_index-1]
+                self.fighter_cls.delete_fighter(index)
+                print(f"Pomyślnie usunięto zawodnika o imieniu {name} i nazwisku {surname}")
+            else:
+                print("Podano nieprawidłowy numer zawodnika.")
+        else:
+            print("Nie znaleziono takiego zawodnika")
     
     
     def show_fighters(self):
-        for fighter in self.fighter_cls.load():
-            print(f"Name: {fighter.name}, Surname: {fighter.surname}, Weight Class: {fighter.weight_class}, Position: {fighter.position_in_ranking}")
-            
+        fighters = self.fighter_cls.load()
+        if fighters:
+            for fighter in fighters:
+                print(f"Name: {fighter.name}, Surname: {fighter.surname}, Weight Class: {fighter.weight_class}, Position: {fighter.position_in_ranking}")
+        else:
+            print("Brak zawodników")

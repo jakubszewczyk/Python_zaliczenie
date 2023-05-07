@@ -16,3 +16,7 @@ class Hub:
         
         self.fighters.new_fighter(hName,hSurname,hWeight_class,hRecordW,hPosition_in_ranking)
         print("Dodano nowego zawodnika")
+        
+    def Wpisz_imie_nazwisko(self):
+        self.wName = input("Podaj imię: ")
+        self.wSurname = input("Podaj Nazwisko: ")
